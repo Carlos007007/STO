@@ -1,0 +1,1 @@
+<?php session_start(['name'=>SESSION_NAME]);
