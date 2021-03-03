@@ -1,7 +1,7 @@
 # STO (Sistema Tienda Online)
 Sistema de TIENDA en ONLINE desarrollada con tecnologías PHP, MVC, MySQL, JS, AJAX &amp; MDB 5
 
-# ⚠️ ¡IMPORTANTE! ⚠️
+# ¡IMPORTANTE!
 <p>
 Este proyecto actualmente se encuentra en desarrollo aún no está finalizado, suscríbete a mi canal para estar pendiente de las nuevas actualizaciones
 </p>
