@@ -21,7 +21,7 @@
 
 
 <div class="container-fluid">
-    <form class="dashboard-container FormularioAjax" method="POST" data-form="save" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/clienteAjax.php">
+    <form class="dashboard-container FormularioAjax" method="POST" data-form="save" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/clienteAjax.php" >
         <input type="hidden" name="modulo_cliente" value="registro">
         <fieldset class="mb-4">
             <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
@@ -115,7 +115,7 @@
                             <label for="cliente_clave_2" class="form-label">Repita contraseña <?php echo FIELD_OBLIGATORY; ?></label>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 col-md-6">
                         <div class="mb-4">
                             <span><strong>Seleccione el estado de la cuenta</strong></span>
                             <div class="form-check mb-2">
@@ -126,6 +126,20 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="cliente_estado_reg" value="Deshabilitada" id="cliente_estado_deshabilitada" />
                                 <label class="form-check-label" for="cliente_estado_deshabilitada">Deshabilitada</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="mb-4">
+                            <span><strong>Seleccione la verificación de la cuenta</strong></span>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="cliente_verificacion_reg" value="Verificada" id="cliente_verificacion_verificada" checked />
+                                <label class="form-check-label" for="cliente_verificacion_verificada">Verificada</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cliente_verificacion_reg" value="No verificada" id="cliente_verificacion_no_verificada" />
+                                <label class="form-check-label" for="cliente_verificacion_no_verificada">No verificada</label>
                             </div>
                         </div>
                     </div>

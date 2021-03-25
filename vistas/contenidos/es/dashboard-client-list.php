@@ -18,3 +18,14 @@
         </li>
     </ul>
 </div>
+
+<div class="container-fluid">
+    <div class="dashboard-container">
+        <?php
+            require_once "./controladores/clienteControlador.php";
+            $ins_cliente = new clienteControlador();
+
+            echo $ins_cliente->paginador_cliente_controlador($pagina[2],15,$pagina[1],"");
+        ?>
+    </div>
+</div>

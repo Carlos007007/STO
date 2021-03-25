@@ -4,8 +4,8 @@
     <hr>
     <div class="row">
         <div class="col-12">
-            <form class="div-bordered bg-white" action="" style="padding: 15px;">
-
+            <form class="div-bordered bg-white FormularioAjax" method="POST" data-form="save" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/clienteAjax.php"  style="padding: 15px;">
+                <input type="hidden" name="modulo_cliente" value="registro">
                 <fieldset class="mb-4">
 			        <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
                     <div class="container-fluid">
@@ -61,13 +61,13 @@
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 <div class="form-outline mb-4">
-                                    <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_provincia_reg" id="cliente_provincia" maxlength="30">
+                                    <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,29}" class="form-control" name="cliente_provincia_reg" id="cliente_provincia" maxlength="29">
                                     <label for="cliente_provincia" class="form-label">Estado, provincia o departamento <?php echo FIELD_OBLIGATORY; ?></label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-outline mb-4">
-                                    <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" class="form-control" name="cliente_ciudad_reg" id="cliente_ciudad" maxlength="30">
+                                    <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,29}" class="form-control" name="cliente_ciudad_reg" id="cliente_ciudad" maxlength="29">
                                     <label for="cliente_ciudad" class="form-label">Ciudad o pueblo <?php echo FIELD_OBLIGATORY; ?></label>
                                 </div>
                             </div>

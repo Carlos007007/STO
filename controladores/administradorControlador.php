@@ -147,7 +147,7 @@
 				$alerta=[
 					"Alerta"=>"simple",
 					"Titulo"=>"Opción no valida",
-					"Texto"=>"Ha seleccionado un ESTADO no valido",
+					"Texto"=>"Ha seleccionado un ESTADO DE CUENTA no valido",
                     "Icon"=>"error",
                     "TxtBtn"=>"Aceptar"
 				];
@@ -302,7 +302,7 @@
         } /*-- Fin controlador - End controller --*/
 
 
-        /*--------- Controlador paginador administradores - Pager Controller Administrators ---------*/
+        /*--------- Controlador paginador administradores - Administrators Pager Controller ---------*/
         public function paginador_administrador_controlador($pagina,$registros,$url,$busqueda){
             $pagina=mainModel::limpiar_cadena($pagina);
 			$registros=mainModel::limpiar_cadena($registros);
@@ -572,7 +572,6 @@
 			
 			$administrador_usuario=mainModel::limpiar_cadena($_POST['administrador_usuario_up']);
 			$administrador_clave=mainModel::limpiar_cadena($_POST['administrador_clave_up']);
-			$administrador_clave=mainModel::encryption($administrador_clave);
 
 
 			/*-- Comprobando campos vacios - Checking empty fields --*/
@@ -586,45 +585,7 @@
 				];
 				echo json_encode($alerta);
 				exit();
-            }
-			
-
-			/*-- Comprobando credenciales para actualizar datos - Checking credentials to update data --*/
-			if($_SESSION['id_sto']!=$id){
-
-				/*-- Comprobando privilegios - Checking privileges --*/
-				if($_SESSION['cargo_sto']!="Administrador"){
-					$alerta=[
-						"Alerta"=>"simple",
-						"Titulo"=>"Acceso no permitido",
-						"Texto"=>"No tienes los permisos necesarios para realizar esta operación en el sistema",
-						"Icon"=>"error",
-						"TxtBtn"=>"Aceptar"
-					];
-					echo json_encode($alerta);
-					exit();
-				}
-
-				$check_cuenta=mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$administrador_usuario' AND usuario_clave='$administrador_clave' AND usuario_cuenta_estado='Activa'");
-			}else{
-				$check_cuenta=mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$administrador_usuario' AND usuario_clave='$administrador_clave' AND usuario_id='$id' AND usuario_cuenta_estado='Activa'");
-			}
-
-
-			if($check_cuenta->rowCount()!=1){
-				$alerta=[
-					"Alerta"=>"simple",
-					"Titulo"=>"Datos incorrectos",
-					"Texto"=>"El nombre de usuario y contraseña ingresados no coinciden con los de su cuenta",
-					"Icon"=>"error",
-					"TxtBtn"=>"Aceptar"
-				];
-				echo json_encode($alerta);
-				exit();
-			}
-			$check_cuenta->closeCursor();
-			$check_cuenta=mainModel::desconectar($check_cuenta);
-
+            }	
 
 			/*-- Verificando integridad de los datos - Checking data integrity --*/
             if(mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,35}",$nombre)){
@@ -676,6 +637,32 @@
 				echo json_encode($alerta);
 				exit();
 			}
+
+			if(mainModel::verificar_datos("[a-zA-Z0-9]{4,30}",$administrador_usuario)){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Formato no valido",
+					"Texto"=>"El USUARIO de TU CUENTA no coincide con el formato solicitado",
+                    "Icon"=>"error",
+                    "TxtBtn"=>"Aceptar"
+				];
+				echo json_encode($alerta);
+				exit();
+			}
+
+			if(mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$administrador_clave)){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Formato no valido",
+					"Texto"=>"La CONTRASEÑA de TU CUENTA no coincide con el formato solicitado",
+					"Icon"=>"error",
+					"TxtBtn"=>"Aceptar"
+				];
+				echo json_encode($alerta);
+				exit();
+			}
+
+			$administrador_clave=mainModel::encryption($administrador_clave);
 			
 			/*-- Comprobando genero - Checking gender --*/
 			if($genero!="Masculino" && $genero!="Femenino"){
@@ -728,6 +715,44 @@
 				echo json_encode($alerta);
 				exit();
             }
+
+
+			/*-- Comprobando credenciales para actualizar datos - Checking credentials to update data --*/
+			if($_SESSION['id_sto']!=$id){
+
+				/*-- Comprobando privilegios - Checking privileges --*/
+				if($_SESSION['cargo_sto']!="Administrador"){
+					$alerta=[
+						"Alerta"=>"simple",
+						"Titulo"=>"Acceso no permitido",
+						"Texto"=>"No tienes los permisos necesarios para realizar esta operación en el sistema",
+						"Icon"=>"error",
+						"TxtBtn"=>"Aceptar"
+					];
+					echo json_encode($alerta);
+					exit();
+				}
+
+				$check_cuenta=mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$administrador_usuario' AND usuario_clave='$administrador_clave' AND usuario_cuenta_estado='Activa'");
+			}else{
+				$check_cuenta=mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$administrador_usuario' AND usuario_clave='$administrador_clave' AND usuario_id='$id' AND usuario_cuenta_estado='Activa'");
+			}
+
+
+			if($check_cuenta->rowCount()!=1){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Datos incorrectos",
+					"Texto"=>"El nombre de usuario y contraseña ingresados no coinciden con los de su cuenta",
+					"Icon"=>"error",
+					"TxtBtn"=>"Aceptar"
+				];
+				echo json_encode($alerta);
+				exit();
+			}
+			$check_cuenta->closeCursor();
+			$check_cuenta=mainModel::desconectar($check_cuenta);
+
 
             /*-- Comprobando email - Checking email --*/
 			if($email!=$campos['usuario_email'] && $email!=""){

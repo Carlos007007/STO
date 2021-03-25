@@ -1,12 +1,12 @@
 <?php
-
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
 	
 	if(isset($_POST['busqueda_inicial']) || isset($_POST['eliminar_busqueda']) || isset($_POST['fecha_inicio']) || isset($_POST['fecha_final'])){
 
 		$data_url=[
-			"usuario"=>"admin-search"
+			"usuario"=>"admin-search",
+			"cliente"=>"client-search"
 		];
 
 		if(isset($_POST['modulo'])){
@@ -95,8 +95,6 @@
 		];
 		echo json_encode($alerta);
 	}else{
-        session_unset();
         session_destroy();
-        header("Location: ".SERVERURL."index/");
-        exit();
+		header("Location: ".SERVERURL."index/");
 	}

@@ -1,5 +1,4 @@
 <?php
-
 	$peticion_ajax=true;
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
@@ -26,10 +25,7 @@
             echo $ins_administrador->actualizar_administrador_controlador();
         }
 
-
 	}else{
-		session_unset();
 		session_destroy();
 		header("Location: ".SERVERURL."index/");
-		exit();
 	}

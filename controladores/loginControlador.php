@@ -73,7 +73,11 @@
 				$_SESSION['foto_sto']=$row['usuario_foto'];
 				$_SESSION['token_sto']=mainModel::encryption(uniqid(mt_rand(), true));
 
-				return header("Location: ".SERVERURL.DASHBOARD."/home/");
+				if(headers_sent()){
+					return "<script> window.location.href='".SERVERURL.DASHBOARD."/home/'; </script>";
+				}else{
+					return header("Location: ".SERVERURL.DASHBOARD."/home/");
+				}
 
 			}else{
 				echo'<script>

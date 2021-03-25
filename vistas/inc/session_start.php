@@ -1,1 +1,3 @@
-<?php session_start(['name'=>SESSION_NAME]);
+<?php
+    session_name(SESSION_NAME);
+    session_start();

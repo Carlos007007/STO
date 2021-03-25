@@ -180,7 +180,7 @@
             </div>
         </fieldset>
         <fieldset class="mb-4">
-            <p class="text-start">Para poder actualizar los datos en el sistema debe de introducir su nombre de usuario y su contraseña actual</p>
+            <p class="text-start">Para poder actualizar los datos en el sistema debe de introducir su <strong>nombre de usuario</strong> y su <strong>contraseña</strong> actual</p>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-md-6">

@@ -22,6 +22,6 @@
 		require_once "./controladores/loginControlador.php";
 
 		$ins_login= new loginControlador();
-		echo $ins_login->iniciar_sesion_administrador_controlador();
+		$ins_login->iniciar_sesion_administrador_controlador();
 	}
 ?>
