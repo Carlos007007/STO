@@ -11,9 +11,10 @@
 <!-- Content -->
 <div class="full-box tile-container">
     <?php
-        $total_categorias=$ins_login->datos_tabla("Normal","categoria","categoria_id",0); 
+        if($_SESSION['cargo_sto']=="Administrador"){
+            $total_categorias=$ins_login->datos_tabla("Normal","categoria","categoria_id",0); 
     ?>
-    <a href="#" class="tile">
+    <a href="<?php echo SERVERURL.DASHBOARD; ?>/category-list/" class="tile">
         <div class="tile-tittle">Categorías</div>
         <div class="tile-icon">
             <i class="fas fa-tag fa-fw"></i>
@@ -21,8 +22,9 @@
         </div>
     </a>
     <?php 
-        $total_categorias->closeCursor();
-        $total_categorias=$ins_login->desconectar($total_categorias);
+            $total_categorias->closeCursor();
+            $total_categorias=$ins_login->desconectar($total_categorias);
+        }
 
         $total_clientes=$ins_login->datos_tabla("Normal","cliente","cliente_id",0); 
     ?>

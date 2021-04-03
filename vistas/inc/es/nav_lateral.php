@@ -15,20 +15,22 @@
                     <a href="<?php echo SERVERURL.DASHBOARD; ?>/home/"><i class="fab fa-dashcube fa-fw"></i> &nbsp; Dashboard</a>
                 </li>
 
+                <?php if($_SESSION['cargo_sto']=="Administrador"){ ?>
                 <li>
                     <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-tag fa-fw"></i> &nbsp; Categorías <i class="fas fa-chevron-down"></i></a>
                     <ul>
                         <li>
-                            <a href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; Nueva categoría</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/category-new/"><i class="fas fa-plus fa-fw"></i> &nbsp; Nueva categoría</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de categorías</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/category-list/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de categorías</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar categoría</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/category-search/"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar categoría</a>
                         </li>
                     </ul>
                 </li>
+                <?php } ?>
 
                 <li>
                     <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-users fa-fw"></i> &nbsp; Clientes <i class="fas fa-chevron-down"></i></a>
@@ -74,6 +76,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <?php if($_SESSION['cargo_sto']=="Administrador"){ ?>
                 <li>
                     <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas  fa-user-secret fa-fw"></i> &nbsp; Administradores <i class="fas fa-chevron-down"></i></a>
@@ -90,6 +93,7 @@
                     </ul>
                 </li>
                 <?php } ?>
+
                 <li>
                     <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-cogs fa-fw"></i> &nbsp; Configuraciones <i class="fas fa-chevron-down"></i></a>
                     <ul>

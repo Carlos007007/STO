@@ -6,7 +6,8 @@
 
 		$data_url=[
 			"usuario"=>"admin-search",
-			"cliente"=>"client-search"
+			"cliente"=>"client-search",
+			"categoria"=>"category-search"
 		];
 
 		if(isset($_POST['modulo'])){

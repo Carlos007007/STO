@@ -42,7 +42,7 @@
 
 	/*----------  Direccion - Address  ----------*/
 	const COUNTRY="El Salvador";
-	const ADDRESS="Cabañas, El Salvador, Centro América";
+	const ADDRESS="San Salvador, El Salvador, Centro América";
 	
 
 	/*----------  Configuración de moneda - Currency Settings  ----------*/
