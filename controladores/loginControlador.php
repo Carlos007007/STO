@@ -74,7 +74,7 @@
 				$_SESSION['token_sto']=mainModel::encryption(uniqid(mt_rand(), true));
 
 				if(headers_sent()){
-					return "<script> window.location.href='".SERVERURL.DASHBOARD."/home/'; </script>";
+					echo "<script> window.location.href='".SERVERURL.DASHBOARD."/home/'; </script>";
 				}else{
 					return header("Location: ".SERVERURL.DASHBOARD."/home/");
 				}
@@ -97,7 +97,7 @@
 			session_unset();
 			session_destroy();
 			if(headers_sent()){
-				return "<script> window.location.href='".SERVERURL."index/'; </script>";
+				echo "<script> window.location.href='".SERVERURL."index/'; </script>";
 			}else{
 				return header("Location: ".SERVERURL."index/");
 			}

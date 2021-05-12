@@ -6,7 +6,10 @@
 	Facebook: https://www.facebook.com/CarlosAlfaroES/
 	Email: carlosalfaro.info@gmail.com
 -->
-
+<?php
+    /*---------- Iniciando sesion ----------*/
+    include "./vistas/inc/session_start.php";
+?>
 <!DOCTYPE html>
 <html lang="<?php echo LANG; ?>">
 <head>
@@ -14,9 +17,6 @@
 </head>
 <body id="main-body" class="scroll">
     <?php
-
-        /*---------- Iniciando sesion ----------*/
-        include "./vistas/inc/session_start.php";
         $peticion_ajax=false;
 
         if(isset($_GET['views'])){
