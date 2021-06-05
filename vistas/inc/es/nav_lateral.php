@@ -97,9 +97,11 @@
                 <li>
                     <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-cogs fa-fw"></i> &nbsp; Configuraciones <i class="fas fa-chevron-down"></i></a>
                     <ul>
-                        <li>
-                            <a href="#"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
-                        </li>
+                        <?php if($_SESSION['cargo_sto']=="Administrador"){ ?>
+                            <li>
+                                <a href="<?php echo SERVERURL.DASHBOARD; ?>/company/"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
+                            </li>
+                        <?php } ?>
                         <li>
                             <a href="<?php echo SERVERURL.DASHBOARD."/admin-update/".$ins_login->encryption($_SESSION['id_sto']); ?>/"><i class="fas fa-user-cog fa-fw"></i> &nbsp; Cuenta</a>
                         </li>

@@ -94,7 +94,6 @@
 
 		/*----------  Controlador forzar cierre de sesion - Controller force logout ----------*/
 		public function forzar_cierre_sesion_controlador(){
-			session_unset();
 			session_destroy();
 			if(headers_sent()){
 				echo "<script> window.location.href='".SERVERURL."index/'; </script>";

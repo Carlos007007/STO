@@ -34,7 +34,7 @@
 
         <div class="card-product div-bordered bg-white shadow-2">
             <figure class="card-product-img">
-                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/product.jpg" alt="nombre_producto">
+                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/cover/product.jpg" alt="nombre_producto">
             </figure>
             <div class="card-product-body">
                 <div class="card-product-content scroll">
@@ -54,7 +54,7 @@
 
         <div class="card-product div-bordered bg-white shadow-2">
             <figure class="card-product-img">
-                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/img/img_not_found.jpg" alt="nombre_producto">
+                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/cover/default.jpg" alt="nombre_producto">
             </figure>
             <div class="card-product-body">
                 <div class="card-product-content scroll">
@@ -74,7 +74,7 @@
 
         <div class="card-product div-bordered bg-white shadow-2">
             <figure class="card-product-img">
-                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/product.jpg" alt="nombre_producto">
+                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/cover/product.jpg" alt="nombre_producto">
             </figure>
             <div class="card-product-body">
                 <div class="card-product-content scroll">
@@ -94,7 +94,7 @@
 
         <div class="card-product div-bordered bg-white shadow-2">
             <figure class="card-product-img">
-                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/img/img_not_found.jpg" alt="nombre_producto">
+                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/cover/default.jpg" alt="nombre_producto">
             </figure>
             <div class="card-product-body">
                 <div class="card-product-content scroll">
