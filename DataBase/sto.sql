@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-03-2021 a las 02:32:55
+-- Tiempo de generación: 10-06-2021 a las 22:19:49
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 7.4.15
 
@@ -43,7 +43,7 @@ CREATE TABLE `caja` (
 
 CREATE TABLE `categoria` (
   `categoria_id` int(10) NOT NULL,
-  `categoria_nombre` varchar(200) COLLATE utf8_spanish2_ci NOT NULL,
+  `categoria_nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_descripcion` text COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -128,9 +128,11 @@ CREATE TABLE `producto` (
   `producto_descripcion` varchar(535) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_stock` int(10) NOT NULL,
   `producto_stock_minimo` int(10) NOT NULL,
-  `producto_precio` decimal(30,2) NOT NULL,
+  `producto_precio_compra` decimal(30,2) NOT NULL,
+  `producto_precio_venta` decimal(30,2) NOT NULL,
   `producto_descuento` int(3) NOT NULL,
   `producto_tipo` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `producto_presentacion` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_marca` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_modelo` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
@@ -163,7 +165,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_telefono`, `usuario_genero`, `usuario_cargo`, `usuario_usuario`, `usuario_email`, `usuario_clave`, `usuario_cuenta_estado`, `usuario_foto`) VALUES
-(1, 'Administrador', 'Principal', '00000000', 'Masculino', 'Administrador', 'Administrador', 'carlosalfaro.info@gmail.com', 'K1hvdkhOR2hvQ1pzK2V1STJPaGlwQT09', 'Activa', 'Avatar_Male_2.png');
+(1, 'Administrador', 'Principal', '00000000', 'Masculino', 'Administrador', 'Administrador', 'admin@admin.com', 'K1hvdkhOR2hvQ1pzK2V1STJPaGlwQT09', 'Activa', 'Avatar_Male_2.png');
 
 -- --------------------------------------------------------
 
@@ -184,6 +186,10 @@ CREATE TABLE `venta` (
   `venta_subtotal` decimal(30,2) NOT NULL,
   `venta_impuestos` decimal(30,2) NOT NULL,
   `venta_total` decimal(30,2) NOT NULL,
+  `venta_costo` decimal(30,2) NOT NULL,
+  `venta_utilidad` decimal(30,2) NOT NULL,
+  `venta_pagado` decimal(30,2) NOT NULL,
+  `venta_cambio` decimal(30,2) NOT NULL,
   `cliente_id` int(10) NOT NULL,
   `usuario_id` int(10) NOT NULL,
   `empresa_id` int(3) NOT NULL,
@@ -199,7 +205,12 @@ CREATE TABLE `venta` (
 CREATE TABLE `venta_detalle` (
   `venta_detalle_id` int(20) NOT NULL,
   `venta_detalle_cantidad` int(10) NOT NULL,
-  `venta_detalle_precio` decimal(30,2) NOT NULL,
+  `venta_detalle_precio_compra` decimal(30,2) NOT NULL,
+  `venta_detalle_precio_regular` decimal(30,2) NOT NULL,
+  `venta_detalle_precio_venta` decimal(30,2) NOT NULL,
+  `venta_detalle_total` decimal(30,2) NOT NULL,
+  `venta_detalle_costo` decimal(30,2) NOT NULL,
+  `venta_detalle_utilidad` decimal(30,2) NOT NULL,
   `venta_detalle_descripcion` varchar(200) COLLATE utf8_spanish2_ci NOT NULL,
   `venta_codigo` varchar(200) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_id` int(20) NOT NULL
