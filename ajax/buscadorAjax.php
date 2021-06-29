@@ -7,7 +7,9 @@
 		$data_url=[
 			"usuario"=>"admin-search",
 			"cliente"=>"client-search",
-			"categoria"=>"category-search"
+			"categoria"=>"category-search",
+			"producto"=>"product-search",
+			"tienda"=>"product"
 		];
 
 		if(isset($_POST['modulo'])){
@@ -90,10 +92,17 @@
 		$url=$data_url[$modulo];	
 
 		/*----------  Redireccionamiento general  ----------*/
-		$alerta=[
-			"Alerta"=>"redireccionar",
-			"URL"=>SERVERURL.DASHBOARD."/".$url."/"
-		];
+		if($modulo!="tienda"){
+			$alerta=[
+				"Alerta"=>"redireccionar",
+				"URL"=>SERVERURL.DASHBOARD."/".$url."/"
+			];
+		}else{
+			$alerta=[
+				"Alerta"=>"redireccionar",
+				"URL"=>SERVERURL.$url."/all/ASC/1/"
+			];
+		}
 		echo json_encode($alerta);
 	}else{
         session_destroy();

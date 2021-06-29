@@ -53,7 +53,7 @@
 	const COIN_SEPARATOR_DECIMAL=".";
 
 
-	/*----------  Tipos de documentos  ----------*/
+	/*----------  Tipos de documentos - Document types ----------*/
 	const DOCUMENTS_USERS=["DNI","Cedula","DUI","Licencia","Pasaporte","Otro"];
 	const DOCUMENTS_COMPANY=["DNI","Cedula","RUT","NIT","RUC","Otro"];
 
@@ -61,8 +61,12 @@
 	/*----------  Tipos de unidades de productos - Types of product units ----------*/
 	const PRODUTS_UNITS=["Unidad","Libra","Kilogramo","Caja","Paquete","Lata","Galon","Botella","Tira","Sobre","Bolsa","Saco","Tarjeta","Otro"];
 
+	/*----------  Límite de tamaño de imágenes de productos en MB - Product image size limit in MB ----------*/
+	const COVER_PRODUCT=3;
+	const GALLERY_PRODUCT=7;
 
-	/*----------  Marcador de campos obligatorios  ----------*/
+
+	/*----------  Marcador de campos obligatorios - Mandatory field marker  ----------*/
 	const FIELD_OBLIGATORY='&nbsp; <i class="fab fa-font-awesome-alt"></i> &nbsp;';
 
 

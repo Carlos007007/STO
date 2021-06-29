@@ -13,7 +13,7 @@
                     <h5 class="poppins-regular font-weight-bold full-box text-center">Nombre del producto</h5>
                     <div class="bag-item full-box">
                         <figure class="full-box">
-                            <img src="<?php echo SERVERURL; ?>vistas/assets/product/product.jpg" class="img-fluid" alt="producto_nombre">
+                            <img src="<?php echo SERVERURL; ?>vistas/assets/product/cover/default.jpg" class="img-fluid" alt="producto_nombre">
                         </figure>
                         <div class="full-box">
                             <div class="container-fluid">
@@ -51,7 +51,7 @@
                     <h5 class="poppins-regular font-weight-bold full-box text-center">Nombre del producto</h5>
                     <div class="bag-item full-box">
                         <figure class="full-box">
-                            <img src="<?php echo SERVERURL; ?>vistas/assets/product/product.jpg" class="img-fluid" alt="producto_nombre">
+                            <img src="<?php echo SERVERURL; ?>vistas/assets/product/cover/default.jpg" class="img-fluid" alt="producto_nombre">
                         </figure>
                         <div class="full-box">
                             <div class="container-fluid">

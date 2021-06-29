@@ -47,8 +47,10 @@
                     <div class="col-12 col-md-6">
                         <div class="">
                             <select class="form-control" name="categoria_estado_up" id="categoria_estado">
-                                <option value="Habilitada" <?php if($campos['categoria_estado']=="Habilitada"){ echo 'selected=""'; } ?> >Habilitada<?php if($campos['categoria_estado']=="Habilitada"){ echo ' (Actual)'; } ?></option>
-                                <option value="Deshabilitada" <?php if($campos['categoria_estado']=="Deshabilitada"){ echo 'selected=""'; } ?> >Deshabilitada<?php if($campos['categoria_estado']=="Deshabilitada"){ echo ' (Actual)'; } ?></option>
+                                <?php
+                                    $array_estado=["Habilitada","Deshabilitada"];
+                                    echo $ins_login->generar_select($array_estado,$campos['categoria_estado']);
+                                ?>
                             </select>
                             <label for="categoria_estado" class="form-label"></label>
                         </div>

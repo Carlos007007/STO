@@ -105,6 +105,10 @@ a:hover{
 	background-color: transparent;
 }
 
+.form-outline .form-control.disabled, .form-outline .form-control:disabled, .form-outline .form-control[readonly] {
+    background-color: #FFF;
+}
+
 /*  Scrolls */
 .scroll::-webkit-scrollbar{
 	width: 8px;
@@ -402,8 +406,54 @@ a:hover{
 	color: var(--color-three);
 }
 
+/*----------  Product list (admin)  ----------*/
+.product-list{
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #E1E1E1;
+}
+.product-list:hover{
+	background-color: rgba(3,169,244,.05);
+}
+.product-list-img,
+.product-list-body{
+	box-sizing: border-box;
+}
+.product-list-img{
+	flex-grow: 0;
+	width: 150px;
+	height: 150px;
+	background-color: rgba(3, 3, 3, .03);
+}
+.product-list-img > figure{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.product-list-img > figure > img{
+	height: 100%;
+}
+.product-list-body{
+	width: calc(100% - 150px);
+	min-height: 100px;
+	padding-top: 7px;
+}
+.product-list-body h5{
+	border-bottom: 1px solid #E1E1E1;
+	padding-bottom: 7px;
+}
 
-
+.img-product-info{
+	max-width: 200px;
+	max-height: 200px;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
 
 /*====================================================================
 =======================  Estilos interfaz web ========================
@@ -619,7 +669,6 @@ a:hover{
 	padding: 0;
 }
 .card-product-img img{
-	width: 100%;
 	height: calc(100% - 1px);
 }
 .card-product-body{

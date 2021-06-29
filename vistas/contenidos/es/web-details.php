@@ -4,50 +4,53 @@
         <hr>
         <div class="container-fluid">
             <div class="row">
+                <?php
+                    include "./vistas/inc/".LANG."/btn_go_back.php";
+                    
+                    $datos_producto=$ins_login->datos_tabla("Unico","producto","producto_id",$pagina[1]);
+                    if($datos_producto->rowCount()==1){
+                        $campos=$datos_producto->fetch();
+                        $total_price=$campos['producto_precio_venta']-($campos['producto_precio_venta']*($campos['producto_descuento']/100));
+                ?>
                 <div class="col-12 col-lg-5">
-                    <!--cover-->
                     <figure class="full-box">
-                        <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/product.jpg" alt="product_">
+                        <?php if(is_file("./vistas/assets/product/cover/".$campos['producto_portada'])){ ?>
+                            <img class="img-fluid" src="<?php echo SERVERURL."vistas/assets/product/cover/".$campos['producto_portada']; ?>" alt="<?php echo $campos['producto_nombre']; ?>">
+                        <?php }else{ ?>
+                            <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/cover/default.jpg" alt="<?php echo $campos['producto_nombre']; ?>">
+                        <?php } ?>
                     </figure>
-    
-                    <!-- Galery -->
-                    <h5 class="poppins-regular text-uppercase" style="padding-top: 70px;">Galería de imágenes</h5>
-                    <hr>
-                    <div class="galery-details full-box">
-    
-                        <!--cover-->
-                        <figure class="full-box">
-                            <a data-fslightbox="gallery" href="<?php echo SERVERURL; ?>vistas/assets/img/banner_3.jpg">
-                                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/img/banner_3.jpg" alt="platillo_">
-                            </a>
-                        </figure>
-    
-                        <!--otras-->
-                        <figure class="full-box">
-                            <a data-fslightbox="gallery" href="<?php echo SERVERURL; ?>vistas/assets/img/banner_1.jpg">
-                                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/img/banner_1.jpg" alt="platillo_">
-                            </a>
-                        </figure>
-    
-                        <figure class="full-box">
-                            <a data-fslightbox="gallery" href="<?php echo SERVERURL; ?>vistas/assets/img/banner_2.jpg">
-                                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/img/banner_2.jpg" alt="platillo_">
-                            </a>
-                        </figure>
-    
-                    </div>
                 </div>
                 <div class="col-12 col-lg-7">
     
-                    <h4 class="font-weight-bold poppins-regular tittle-details">Nombre del producto</h4>
-    
+                    <h4 class="font-weight-bold poppins-regular tittle-details"><?php echo $campos['producto_nombre']; ?></h4>
+
+                    <div class="container-fluid" style="padding-top: 50px;">
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-4">
+                                <strong class="text-uppercase"><i class="fas fa-pallet fa-fw"></i> Tipo:</strong> &nbsp: <?php echo $campos['producto_tipo']; ?>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4"">
+                                <strong class="text-uppercase"><i class="fas fa-box fa-fw"></i> Stock:</strong> &nbsp: <?php if($campos['producto_tipo']=="Fisico"){ echo $campos['producto_stock']; }else{ echo "Disponible"; } ?>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4"">
+                                <strong class="text-uppercase"><i class="far fa-registered fa-fw"></i> Fabricante:</strong> &nbsp: <?php echo $campos['producto_marca']; ?>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4"">
+                                <strong class="text-uppercase"><i class="fas fa-crown fa-fw"></i> Modelo:</strong> &nbsp: <?php echo $campos['producto_modelo']; ?>
+                            </div>
+                        </div>
+                    </div>
+                            
+                    <?php if($campos['producto_descripcion']!=""){ ?>
                     <p class="text-justify lead" style="padding: 40px 0;">
-                        <span class="text-info lead font-weight-bold">Descripción:</span><br>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis obcaecati, corporis nam ab officiis modi nesciunt iure repudiandae vel! Illum minus sapiente sunt quibusdam vero voluptate sequi eaque consectetur perferendis!
+                        <span class="lead text-uppercase font-weight-bold">Descripción:</span><br>
+                        <?php echo $campos['producto_descripcion']; ?>
                     </p>
-    
-                    <p class="lead font-weight-bold">Precio: $25.00 USD</p>
-    
+                    <?php } ?>
+
+                    <p class="font-weight-bold text-uppercase" style="font-size: 22px;"><i class="far fa-credit-card fa-fw"></i> Precio: <span class="text-primary"><?php echo COIN_SYMBOL.number_format($total_price,COIN_DECIMALS,COIN_SEPARATOR_DECIMAL,COIN_SEPARATOR_THOUSAND).' '.COIN_NAME; ?></span></p>
+                    
                     <!-- Agregar al carrito -->
                     <form action="" style="padding-top: 70px;">
                         <div class="container-fluid">
@@ -81,10 +84,41 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
+
+                <?php
+                    $datos_galeria=$ins_login->datos_tabla("Normal","imagen WHERE producto_id='".$campos['producto_id']."'","*",0);
+
+                    if($datos_galeria->rowCount()>0){
+                ?>
+                <div class="col-12">
+                    <h5 class="poppins-regular text-uppercase" style="padding-top: 70px;">Galería de imágenes</h5>
+                    <hr>
+                    <div class="galery-details full-box">
+                        
+                        <?php while($campos_galeria=$datos_galeria->fetch()){ ?>
+                        <figure class="full-box">
+                            <?php if(is_file("./vistas/assets/product/gallery/".$campos_galeria['imagen_nombre'])){ ?>
+                            <a data-fslightbox="gallery" href="<?php echo SERVERURL; ?>vistas/assets/product/gallery/<?php echo $campos_galeria['imagen_nombre']; ?>">
+                                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/gallery/<?php echo $campos_galeria['imagen_nombre']; ?>" alt="<?php echo $campos['producto_nombre']; ?>">
+                            </a>
+                            <?php }else{ ?>
+                            <a data-fslightbox="gallery" href="<?php echo SERVERURL; ?>vistas/assets/product/gallery/default.jpg">
+                                <img class="img-fluid" src="<?php echo SERVERURL; ?>vistas/assets/product/gallery/default.jpg" alt="<?php echo $campos['producto_nombre']; ?>">
+                            </a>
+                            <?php } ?>
+                        </figure>
+                        <?php } ?>
+    
+                    </div>
+                </div>
+                <script src="<?php echo SERVERURL; ?>vistas/js/fslightbox.js"></script>
+                <?php 
+                        }
+                    }else{ include "./vistas/inc/".LANG."/error_alert.php";}
+                ?>
             </div>
         </div>
     </div>
-</div>     
-
-<script src="<?php echo SERVERURL; ?>vistas/js/fslightbox.js"></script>
+</div>

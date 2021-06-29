@@ -41,7 +41,7 @@
 
         $total_productos=$ins_login->datos_tabla("Normal","producto","producto_id",0);
     ?>
-    <a href="#" class="tile">
+    <a href="<?php echo SERVERURL.DASHBOARD; ?>/product-list/" class="tile">
         <div class="tile-tittle">Productos</div>
         <div class="tile-icon">
             <i class="fas fa-box-open fa-fw"></i>
