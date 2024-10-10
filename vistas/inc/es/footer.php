@@ -4,7 +4,7 @@
 
             <div class="col-12">
                 <p class="text-justify lead" style="padding-bottom: 50px;">
-                    Recuerda que puedes apoyar este proyecto suscribiéndote a mis canales de YouTube <a href="https://www.youtube.com/channel/UCRMJ0vxtnHh_UAq1Yx9BYWQ?sub_confirmation=1" target="_blank">CARLOS ALFARO</a> & <a href="https://www.youtube.com/channel/UCSKQJ3n2_CNjgB3sb2fvTdQ?sub_confirmation=1" target="_blank">DESIGNLOPERS</a>, tu apoyo es muy importante para seguir desarrollando este software y para traer nuevos proyectos.
+                    Este sistema se seguirá desarrollando y el código fuente solo estará disponible para los <a href="https://www.youtube.com/channel/UCRMJ0vxtnHh_UAq1Yx9BYWQ/join" target="_blank">MIEMBROS del canal de YouTube</a>, puede hacerse miembro <a href="https://www.youtube.com/channel/UCRMJ0vxtnHh_UAq1Yx9BYWQ/join" target="_blank">haciendo clic acá</a>.
                 </p>
             </div>
 
