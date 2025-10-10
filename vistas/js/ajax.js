@@ -55,6 +55,12 @@ function enviar_formulario_ajax(e){
 		}else{
 			texto_alerta="The search term will be removed and you will have to type one again";
 		}
+	}else if(tipo==="login"){
+		if(lang==="es"){
+			texto_alerta="Se iniciará la sesión en el sistema";
+		}else{
+			texto_alerta="The session will start in the system";
+		}
 	}else{
 		if(lang==="es"){
 			texto_alerta="Quieres realizar la operación solicitada";

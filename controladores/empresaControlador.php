@@ -1,10 +1,6 @@
 <?php
 
-    if($peticion_ajax){
-        require_once "../modelos/mainModel.php";
-    }else{
-        require_once "./modelos/mainModel.php";
-    }
+    require_once __DIR__."/../modelos/mainModel.php";
 
 	class empresaControlador extends mainModel{
 

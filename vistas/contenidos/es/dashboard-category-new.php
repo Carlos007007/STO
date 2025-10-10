@@ -24,7 +24,7 @@
 
 
 <div class="container-fluid">
-    <form class="dashboard-container FormularioAjax" method="POST" data-form="save" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/categoriaAjax.php">
+    <form class="dashboard-container FormularioAjax" method="POST" data-form="save" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/categoriaAjax.php" >
         <input type="hidden" name="modulo_categoria" value="registro">
         <fieldset class="mb-4">
             <legend><i class="fas fa-tag fa-fw"></i> &nbsp; Información de categoría</legend>

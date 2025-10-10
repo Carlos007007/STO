@@ -51,39 +51,27 @@
 
                     <p class="font-weight-bold text-uppercase" style="font-size: 22px;"><i class="far fa-credit-card fa-fw"></i> Precio: <span class="text-primary"><?php echo COIN_SYMBOL.number_format($total_price,COIN_DECIMALS,COIN_SEPARATOR_DECIMAL,COIN_SEPARATOR_THOUSAND).' '.COIN_NAME; ?></span></p>
                     
-                    <!-- Agregar al carrito -->
-                    <form action="" style="padding-top: 70px;">
+                    <!-- Opciones -->
+                    <div style="padding-top: 70px;">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-md-6">
-                                    <div class="form-outline mb-4">
-                                        <input type="text" value="1" class="form-control text-center" id="product_cant" pattern="[0-9]{1,10}" maxlength="10" >
-                                        <label for="product_cant" class="form-label">Cantidad</label>
-                                    </div>
+                                    <button type="button" class="btn btn-link" ><i class="fas fa-heart fa-fw"></i> &nbsp; Agregar a favoritos</button>
                                 </div>
+                                <?php 
+                                if(empty($_SESSION['carrito_sto'][$campos['producto_id']])){ 
+                                    ?>
                                 <div class="col-12 col-md-6 text-center">
-                                    <button type="submit" class="btn btn-info"><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Agregar al carrito</button>
+                                    <button type="button" class="btn btn-info" data-mdb-toggle="modal" data-mdb-target="#addProductModal" ><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Agregar al carrito</button>
                                 </div>
+                                <?php }else{ ?>
+                                <div class="col-12 col-md-6 text-center">
+                                    <a href="<?php echo SERVERURL; ?>bag/" class="btn btn-success" ><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Ver en carrito</a>
+                                </div>
+                                <?php } ?>
                             </div>
                         </div>
-                    </form>
-    
-                    <!-- Actualizar el carrito -->
-                    <form action="" style="padding-top: 70px;">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-outline mb-4">
-                                        <input type="text" value="1" class="form-control text-center" id="product_cant" pattern="[0-9]{1,10}" maxlength="10" >
-                                        <label for="product_cant" class="form-label">Cantidad</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 text-center">
-                                    <button type="submit" class="btn btn-success"><i class="fas fa-sync fa-fw"></i> &nbsp; Actualizar carrito</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
 
                 </div>
 
@@ -113,12 +101,45 @@
     
                     </div>
                 </div>
+
+
                 <script src="<?php echo SERVERURL; ?>vistas/js/fslightbox.js"></script>
-                <?php 
-                        }
+
+                <?php } ?>
+
+                <!-- Modal agregar producto -->
+                <div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true" aria-labelledby="addProductModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <form class="modal-content FormularioAjax" action="<?php echo SERVERURL; ?>ajax/carritoAjax.php" data-form="default" data-lang="<?php echo LANG; ?>" method="POST" autocomplete="off">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addProductModalLabel"><i class="fas fa-cart-plus"></i> &nbsp; Agregar producto al carrrito</h5>
+                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" name="modulo_carrito" value="agregar">
+                                <input type="hidden" name="producto_id" value="<?php echo $pagina[1]; ?>">
+
+                                <p><?php echo $campos['producto_nombre']; ?></p>
+                                
+                                <div class="form-outline mb-4">
+                                    <input type="text" value="1" class="form-control text-center" name="producto_cantidad" id="producto_cantidad" pattern="[0-9]{1,10}" maxlength="10" >
+                                    <label for="producto_cantidad" class="form-label">Cantidad</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-mdb-dismiss="modal"><i class="fas fa-times fa-fw"></i> &nbsp; Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <?php
                     }else{ include "./vistas/inc/".LANG."/error_alert.php";}
                 ?>
             </div>
         </div>
     </div>
 </div>
+

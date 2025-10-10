@@ -3,7 +3,8 @@
         <figure class="full-box mb-4">
             <img src="<?php echo SERVERURL; ?>vistas/assets/avatar/Avatar_default_male.png" alt="" class="img-fluid login-icon">
         </figure>
-        <form action="" method="POST" autocomplete="off">
+        <form class="FormularioAjax" data-form="login" data-lang="<?php echo LANG; ?>" action="<?php echo SERVERURL;?>ajax/loginAjax.php" method="POST" autocomplete="off" >
+            <input type="hidden" name="modulo_login" value="login_cliente">
             <div class="form-outline mb-4">
                 <input type="email" class="form-control" id="login_email" name="login_email" maxlength="50" required="" >
                 <label for="login_email" class="form-label"><i class="fas fa-envelope-open-text"></i> &nbsp; Email</label>

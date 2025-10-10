@@ -1,10 +1,6 @@
 <?php
 
-    if($peticion_ajax){
-        require_once "../modelos/mainModel.php";
-    }else{
-        require_once "./modelos/mainModel.php";
-    }
+    require_once __DIR__."/../modelos/mainModel.php";
 
 	class productoControlador extends mainModel{
 
@@ -731,7 +727,7 @@
             $orden=mainModel::limpiar_cadena($orden);
             $categoria=mainModel::limpiar_cadena($categoria);
             $busqueda=mainModel::limpiar_cadena($busqueda);
-            $url=SERVERURL.$url."/".$categoria."/".$orden."/";
+            $url=SERVERURL.$url."/".$categoria."/";
 			$tabla="";
 
 
@@ -837,9 +833,7 @@
                                     }
                                 $tabla.='</div>
                                 <div class="text-center card-product-options" style="padding: 10px 0;">
-                                    <button type="button" class="btn btn-link btn-sm btn-rounded text-success" ><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Agregar</button>
-                                    &nbsp; &nbsp;
-                                    <a href="'.SERVERURL.'details/'.mainModel::encryption($rows['producto_id']).'/" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-box-open fa-fw"></i> &nbsp; Detalles</a>
+                                    <a href="'.SERVERURL.'details/'.mainModel::encryption($rows['producto_id']).'/" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-box-open fa-fw"></i> &nbsp; Detalles de producto</a>
                                     &nbsp; &nbsp;
                                     <button type="button" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-heart fa-fw"></i></button>
                                 </div>
@@ -2013,5 +2007,35 @@
 				];
 			}
 			echo json_encode($alerta);
+        } /*-- Fin controlador - End controller --*/
+
+
+        /*--------- Controlador ordenar producto - Controller order product ---------*/
+        public function ordenar_producto_producto_controlador(){
+
+            /*-- Lista blanca para orden de busqueda - Whitelist for search order --*/
+            $orden_lista=["ASC","DESC","MAX","MIN"];
+
+            if(!in_array($_POST['orden'], $orden_lista)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Valor no permitido",
+                    "Texto"=>"Ha seleccionado un valor incorrecto",
+                    "Icon"=>"error",
+                    "TxtBtn"=>"Aceptar"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            $_SESSION["web_product_order"]=mainModel::limpiar_cadena($_POST['orden']);
+            $categoria=mainModel::limpiar_cadena($_POST['categoria']);
+
+            $alerta=[
+                "Alerta"=>"redireccionar",
+                "URL"=>SERVERURL."product/".$categoria."/"
+            ];
+
+            echo json_encode($alerta);
         } /*-- Fin controlador - End controller --*/
     }

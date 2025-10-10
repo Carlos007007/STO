@@ -25,16 +25,17 @@
 
 <div class="container-fluid">
     <?php
-        if(!isset($_SESSION['busqueda_categoria']) && empty($_SESSION['busqueda_categoria'])){
+        if(!isset($_SESSION[$pagina[1]]) && empty($_SESSION[$pagina[1]])){
     ?>
     <form class="dashboard-container mb-4 FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" data-form="default" data-lang="<?php echo LANG; ?>" method="POST" autocomplete="off" style="padding-top: 40px">
-        <input type="hidden" name="modulo" value="categoria">
+        <input type="hidden" name="modulo_buscador" value="buscar">
+        <input type="hidden" name="modulo_url" value="<?php echo $pagina[1]; ?>">
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-md-6">
                     <div class="form-outline mb-4">
-                        <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" name="busqueda_inicial" id="busqueda_inicial" maxlength="30">
-                        <label for="busqueda_inicial" class="form-label">¿Qué categoría estás buscando?</label>
+                        <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" name="txt_buscador" id="txt_buscador" maxlength="30">
+                        <label for="txt_buscador" class="form-label">¿Qué categoría estás buscando?</label>
                     </div>
                     <p class="text-center">
                         <button class="btn btn-primary"><i class="fas fa-search"></i> &nbsp; Buscar</button>
@@ -46,9 +47,9 @@
     <?php }else{ ?>
     <div class="dashboard-container mb-4">
         <form class="mb-4 FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" data-form="search" data-lang="<?php echo LANG; ?>" method="POST">
-            <input type="hidden" name="modulo" value="categoria">
-            <input type="hidden" name="eliminar_busqueda" value="eliminar">
-            <p class="lead text-center roboto-condensed-regular">Resultados de la búsqueda <span class="font-weight-bold">“<?php echo $_SESSION['busqueda_categoria']; ?>”</span></p>
+            <input type="hidden" name="modulo_buscador" value="eliminar">
+            <input type="hidden" name="modulo_url" value="<?php echo $pagina[1]; ?>">
+            <p class="lead text-center roboto-condensed-regular">Resultados de la búsqueda <span class="font-weight-bold">“<?php echo $_SESSION[$pagina[1]]; ?>”</span></p>
             <p class="text-center">
                 <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> &nbsp; Eliminar búsqueda</button>
             </p>
@@ -58,7 +59,7 @@
             require_once "./controladores/categoriaControlador.php";
             $ins_categoria = new categoriaControlador();
 
-            echo $ins_categoria->paginador_categoria_controlador($pagina[2],15,$pagina[1],$_SESSION['busqueda_categoria']);
+            echo $ins_categoria->paginador_categoria_controlador($pagina[2],15,$pagina[1],$_SESSION[$pagina[1]]);
         ?>
     </div>
     <?php } ?>

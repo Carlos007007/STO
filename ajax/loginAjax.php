@@ -1,5 +1,4 @@
 <?php
-	$peticion_ajax=true;
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
 
@@ -13,6 +12,12 @@
         /*--------- Cerrar sesion administrador - Log out administrator ---------*/
         if($_POST['modulo_login']=="logout_administrador"){
             echo $ins_login->cerrar_sesion_administrador_controlador();
+		}
+
+
+		/*--------- Iniciar sesion cliente - Log out client ---------*/
+        if($_POST['modulo_login']=="login_cliente"){
+            echo $ins_login->iniciar_sesion_cliente_controlador();
 		}
 
 

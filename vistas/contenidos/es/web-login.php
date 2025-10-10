@@ -1,3 +1,6 @@
+<?php 
+    include "./vistas/inc/session_security.php";
+?>
 <div class="login-container">
     <div class="login-content">
         <figure class="full-box mb-4">

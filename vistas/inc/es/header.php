@@ -15,7 +15,7 @@
                     <a href="<?php echo SERVERURL; ?>product/all/" >Productos</a>
                 </li>
 
-                <?php if(!isset($_SESSION['cargo_sto'])){ ?>
+                <?php if(!isset($_SESSION['id_sto']) && !isset($_SESSION['cliente_id_sto'])){ ?>
                 <li>
                     <a href="<?php echo SERVERURL; ?>registration/" >Regístrate</a>
                 </li>
@@ -27,7 +27,9 @@
         </nav>
         <a href="<?php echo SERVERURL; ?>bag/" class="header-button full-box text-center" title="Carrito" >
             <i class="fas fa-shopping-bag"></i>
-            <span class="badge bg-primary rounded-pill bag-count" >2</span>
+            <?php if(!empty($_SESSION['carrito_sto'])){ ?>
+            <span class="badge bg-primary rounded-pill bag-count" ><?php echo count($_SESSION['carrito_sto']); ?></span>
+            <?php } ?>
         </a>
 
         <?php if(isset($_SESSION['cargo_sto']) && ($_SESSION['cargo_sto']=="Administrador" || $_SESSION['cargo_sto']=="Cajero")){ ?>
@@ -46,8 +48,29 @@
                     <i class="fas fa-sign-out-alt"></i> &nbsp; Cerrar sesión
                 </a>
             </div>
+        <?php }elseif(isset($_SESSION['cliente_id_sto']) && ($_SESSION['cliente_id_sto']>0)){ ?>
+            <div class="header-button full-box text-center" id="userMenu" data-mdb-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="<?php echo $_SESSION['cliente_nombre_sto']; ?>" >
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="dropdown-menu div-bordered popup-login" aria-labelledby="userMenu">
+                <p class="text-center" style="padding-top: 10px;">
+                    <i class="fas fa-user-circle fa-3x"></i><br>
+                    <small><?php echo $_SESSION['cliente_nombre_sto']; ?></small>
+                </p>
+                <a class="dropdown-item" href="<?php echo SERVERURL; ?>home/">
+                    <i class="fab fa-dashcube fa-fw"></i> &nbsp; Dashboard
+                </a>
+                <a class="dropdown-item" href="<?php echo SERVERURL; ?>orders/">
+                    <i class="fas fa-shopping-basket fa-fw"></i> &nbsp; Pedidos
+                </a>
+                <a class="dropdown-item" href="<?php echo SERVERURL; ?>wish-list/">
+                    <i class="fas fa-heart fa-fw"></i> &nbsp; Favoritos
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);" onclick="cerrar_sesion_administrador()">
+                    <i class="fas fa-sign-out-alt"></i> &nbsp; Cerrar sesión
+                </a>
+            </div>
         <?php } ?>
-
         <a href="javascript:void(0);" class="header-button full-box text-center d-lg-none" title="Menú" onclick="show_menu_mobile()" >
             <i class="fas fa-bars"></i>
         </a>

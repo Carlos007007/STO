@@ -1,3 +1,6 @@
+<?php 
+    include "./vistas/inc/session_security.php";
+?>
 <div class="container container-web-page">
     <h3 class="font-weight-bold poppins-regular text-uppercase">Crear cuenta</h3>
     <p class="text-justify">Al crear una cuenta en nuestro sitio web usted acepta nuestros <a href="#">términos y condiciones</a>. La información introducida en el formulario debe de ser clara, precisa y legitima. Para crear una cuenta debe de llenar todos los campos que son obligatorios marcados con el icono <?php echo FIELD_OBLIGATORY; ?></p>

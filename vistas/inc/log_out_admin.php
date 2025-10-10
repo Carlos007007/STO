@@ -31,21 +31,7 @@
             cancelButtonText: btn_cancel_alerta
         }).then((result) => {
             if(result.isConfirmed){
-    
-                let datos = new FormData();
-                datos.append("token","<?php echo $ins_login->encryption($_SESSION['token_sto']); ?>");
-                datos.append("usuario","<?php echo $ins_login->encryption($_SESSION['usuario_sto']); ?>");
-                datos.append("modulo_login","logout_administrador");
-    
-                fetch("<?php echo SERVERURL; ?>ajax/loginAjax.php",{
-                    method: 'POST',
-                    body: datos
-                })
-                .then(respuesta => respuesta.json())
-                .then(respuesta =>{
-                     return alertas_ajax(respuesta);
-                });
-        
+                window.location.href='<?php echo SERVERURL; ?>logout/';
             }
         });
     }

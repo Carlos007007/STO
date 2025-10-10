@@ -1,5 +1,4 @@
 <?php
-	$peticion_ajax=true;
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
 
@@ -43,6 +42,11 @@
 		/*--------- Eliminar imagen de galeria - Delete image from gallery ---------*/
         if($_POST['modulo_producto']=="galeria_eliminar"){
 			echo $ins_producto->eliminar_galeria_producto_controlador();
+		}
+
+		/*--------- Ordenar producto - Order product ---------*/
+        if($_POST['modulo_producto']=="producto_ordenar"){
+			echo $ins_producto->ordenar_producto_producto_controlador();
 		}
 
 	}else{
