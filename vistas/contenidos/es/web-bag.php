@@ -4,7 +4,22 @@
         <hr>
     </div>
     <div class="container">
-        <?php include "./vistas/inc/".LANG."/btn_go_back.php"; ?>
+        <?php 
+            include "./vistas/inc/".LANG."/btn_go_back.php";
+
+            if(isset($_SESSION['pedido_codigo_factura']) && $_SESSION['pedido_codigo_factura']!=""){
+                echo '
+                <div class="alert alert-info text-center mb-4">
+                    <h4 class="alert-heading">¡Pedido confirmado!</h4>
+                    <p>El pedido se realizó con éxito, haga clic en el siguiente botón para ver la lista de sus pedidos
+                    </p>
+                    <hr>
+                    <a href="'.SERVERURL.'orders/" class="btn btn-primary">Ver lista de pedidos</a>
+                </div>
+                ';
+                unset($_SESSION['pedido_codigo_factura']);
+            } 
+        ?>
     </div>
     <?php if(!empty($_SESSION['carrito_sto'])){ ?>
     <div class="container pt-3">
@@ -18,6 +33,7 @@
                     ';
                     unset($_SESSION['alerta_producto_agregado_carrito']);
                 }
+
             ?>
 
             <div class="col-12 col-md-7 col-lg-8">
@@ -49,7 +65,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <button type="button" class="btn btn-success" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Actualizar cantidad" onclick="actualizar_cantidad('#sale_input_<?php echo str_replace(" ", "_", $campos['producto_id']); ?>','<?php echo $campos['producto_codigo']; ?>')" ><i class="fas fa-sync-alt fa-fw"></i></button>
+                                                <button type="button" class="btn btn-success" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Actualizar cantidad" onclick="actualizar_cantidad('#sale_input_<?php echo str_replace(" ", "_", $campos['producto_id']); ?>','<?php echo $campos['producto_codigo']; ?>','client')" ><i class="fas fa-sync-alt fa-fw"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -81,7 +97,10 @@
             <div class="col-12 col-md-5 col-lg-4">
                 <div class="full-box div-bordered">
                     <?php if(isset($_SESSION['cliente_id_sto']) && ($_SESSION['cliente_id_sto']>0)){ ?>
-                    <form>
+                    <form class="FormularioAjax" method="POST" data-form="default" data-lang="<?php echo LANG; ?>" autocomplete="off" action="<?php echo SERVERURL;?>ajax/carritoAjax.php">
+
+                        <input type="hidden" name="modulo_carrito" value="guardar_pedido_cliente" >
+
                         <h5 class="text-center text-uppercase bg-success" style="color: #FFF; padding: 10px 0;">Resumen de la orden</h5>
                         <ul class="list-group bag-details">
                             <a class="list-group-item d-flex justify-content-between align-items-center text-uppercase poppins-regular font-weight-bold">
@@ -111,9 +130,17 @@
                             </a>
                         </ul>
                         <p class="text-center pb-3 pt-2">
-                            <button type="button" class="btn btn-primary"><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Confirmar pedido</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-shopping-bag fa-fw"></i> &nbsp; Confirmar pedido</button>
                         </p>
                     </form>
+                    <?php }elseif(isset($_SESSION['id_sto']) && ($_SESSION['id_sto']>0)){ ?>
+                    <h5 class="text-center text-uppercase poppins-regular font-weight-bold pt-3">Procesar pedido</h5>
+                    <p class="text-justify container">
+                        El pedido debe de procesarse en el panel de administración haga clic en el siguiente botón para procesar el pedido
+                    </p>
+                    <p class="text-center pb-3 pt-2">
+                        <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-new/" class="btn btn-primary" ><i class="fas fa-shopping-basket fa-fw"></i> &nbsp; Procesar pedido</a>
+                    </p>
                     <?php }else{ ?>
                     <h5 class="text-center text-uppercase poppins-regular font-weight-bold pt-3">Regístrate o inicia sesión</h5>
                     <p class="text-justify container">
@@ -137,88 +164,4 @@
     <?php } ?>
 </section>
 
-<script type="text/javascript">
-    
-    /* Remover producto - Remove product */
-    function remover_producto(id){
-
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Desea remover este producto del carrito',
-            icon: 'question',
-            showCancelButton: true,
-            showDenyButton: false,
-            showConfirmButton: true,
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-        }).then((result)=>{
-            if(result.value){
-                let datos = new FormData();
-                datos.append("producto_id", id);
-                datos.append("modulo_carrito", "remover");
-
-                fetch('<?php echo SERVERURL; ?>ajax/carritoAjax.php',{
-                    method: 'POST',
-                    body: datos
-                })
-                .then(respuesta => respuesta.json())
-                .then(respuesta =>{
-                    return alertas_ajax(respuesta);
-                });
-            }
-        });
-    }
-
-
-    /* Actualizar producto - Update product */
-    function actualizar_cantidad(id,codigo){
-        let cantidad=document.querySelector(id).value;
-
-        cantidad=cantidad.trim();
-        codigo.trim();
-
-        if(cantidad>0){
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Desea actualizar la cantidad de productos',
-                icon: 'question',
-                showCancelButton: true,
-                showDenyButton: false,
-                showConfirmButton: true,
-                cancelButtonText: 'No, cancelar',
-                confirmButtonText: 'Si, actualizar',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result)=>{
-                if(result.value){
-
-                    let datos = new FormData();
-                    datos.append("producto_codigo", codigo);
-                    datos.append("producto_id", id);
-                    datos.append("producto_cantidad", cantidad);
-                    datos.append("modulo_carrito", "actualizar");
-
-                    fetch('<?php echo SERVERURL; ?>ajax/carritoAjax.php',{
-                        method: 'POST',
-                        body: datos
-                    })
-                    .then(respuesta => respuesta.json())
-                    .then(respuesta =>{
-                        return alertas_ajax(respuesta);
-                    });
-                }
-            });
-        }else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Ocurrió un error inesperado',
-                text: 'Debes de introducir una cantidad mayor a 0',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    }
-
-</script>
+<?php include "./vistas/inc/".LANG."/update_remove_product_script.php"; ?>

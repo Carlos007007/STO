@@ -24,7 +24,7 @@ function enviar_formulario_ajax(e){
 	let config = { 
 		method: method,
        	headers: encabezados,
-       	mode: 'cors',
+       	mode: 'same-origin',
        	cache: 'no-cache',
        	body: data
     };

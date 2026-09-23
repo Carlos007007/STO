@@ -6,8 +6,14 @@
 
 		/*----------  Funcion conectar a BD - Function connect to BD ----------*/
 		protected static function conectar(){
-			$conexion = new PDO(SGBD,USER,PASS);
-			$conexion->exec("SET CHARACTER SET utf8");
+			$opciones = [
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_EMULATE_PREPARES => false,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+				PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
+			];
+
+			$conexion = new PDO(SGBD,USER,PASS,$opciones);
 			return $conexion;
 		} /*--  Fin Funcion - End Function --*/
 
@@ -179,34 +185,20 @@
 
 
 		/*----------  Funcion limpiar cadenas - Function to clean text strings ----------*/
-		protected static function limpiar_cadena($cadena){
+		public static function limpiar_cadena($cadena){
+
+			$palabras=["<script>","</script>","<script src","<script type=","SELECT * FROM","SELECT "," SELECT ","DELETE FROM","INSERT INTO","DROP TABLE","DROP DATABASE","TRUNCATE TABLE","SHOW TABLES","SHOW DATABASES","<?php","?>","--","^","==",";","::","'or","1=1","'or 1=1#"];
+
 			$cadena=trim($cadena);
 			$cadena=stripslashes($cadena);
-			$cadena=str_ireplace("<script>", "", $cadena);
-			$cadena=str_ireplace("</script>", "", $cadena);
-			$cadena=str_ireplace("<script src", "", $cadena);
-			$cadena=str_ireplace("<script type=", "", $cadena);
-			$cadena=str_ireplace("SELECT * FROM", "", $cadena);
-			$cadena=str_ireplace("DELETE FROM", "", $cadena);
-			$cadena=str_ireplace("INSERT INTO", "", $cadena);
-			$cadena=str_ireplace("DROP TABLE", "", $cadena);
-			$cadena=str_ireplace("DROP DATABASE", "", $cadena);
-			$cadena=str_ireplace("TRUNCATE TABLE", "", $cadena);
-			$cadena=str_ireplace("SHOW TABLES;", "", $cadena);
-			$cadena=str_ireplace("SHOW DATABASES;", "", $cadena);
-			$cadena=str_ireplace("<?php", "", $cadena);
-			$cadena=str_ireplace("?>", "", $cadena);
-			$cadena=str_ireplace("--", "", $cadena);
-			$cadena=str_ireplace("^", "", $cadena);
-			$cadena=str_ireplace("<", "", $cadena);
-			$cadena=str_ireplace(">", "", $cadena);
-			$cadena=str_ireplace("[", "", $cadena);
-			$cadena=str_ireplace("]", "", $cadena);
-			$cadena=str_ireplace("==", "", $cadena);
-			$cadena=str_ireplace(";", "", $cadena);
-			$cadena=str_ireplace("::", "", $cadena);
+
+			foreach($palabras as $palabra){
+				$cadena=str_ireplace($palabra, "", $cadena);
+			}
+
 			$cadena=trim($cadena);
 			$cadena=stripslashes($cadena);
+
 			return $cadena;
 		} /*--  Fin Funcion - End Function --*/
 

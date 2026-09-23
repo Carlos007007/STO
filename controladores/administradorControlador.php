@@ -314,58 +314,76 @@
             $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
             
             if(isset($busqueda) && $busqueda!=""){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE ((usuario_id!='$id' AND usuario_id!='".$_SESSION['id_sto']."') AND (usuario_nombre LIKE '%$busqueda%' OR usuario_apellido LIKE '%$busqueda%' OR usuario_cargo LIKE '%$busqueda%' OR usuario_usuario LIKE '%$busqueda%')) ORDER BY usuario_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT * FROM usuario WHERE ((usuario_id!='$id' AND usuario_id!='".$_SESSION['id_sto']."') AND (usuario_nombre LIKE '%$busqueda%' OR usuario_apellido LIKE '%$busqueda%' OR usuario_cargo LIKE '%$busqueda%' OR usuario_usuario LIKE '%$busqueda%')) ORDER BY usuario_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_total="SELECT COUNT(usuario_id) FROM usuario WHERE ((usuario_id!='$id' AND usuario_id!='".$_SESSION['id_sto']."') AND (usuario_nombre LIKE '%$busqueda%' OR usuario_apellido LIKE '%$busqueda%' OR usuario_cargo LIKE '%$busqueda%' OR usuario_usuario LIKE '%$busqueda%'))";
+
 			}else{
-				$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE usuario_id!='".$_SESSION['id_sto']."' AND usuario_id!='1' ORDER BY usuario_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT * FROM usuario WHERE usuario_id!='".$_SESSION['id_sto']."' AND usuario_id!='1' ORDER BY usuario_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_total="SELECT COUNT(usuario_id) FROM usuario WHERE usuario_id!='".$_SESSION['id_sto']."' AND usuario_id!='1'";
+				
 			}
 
 			$conexion = mainModel::conectar();
 
-			$datos = $conexion->query($consulta);
-
+			$datos = $conexion->query($consulta_datos);
 			$datos = $datos->fetchAll();
 
-			$total = $conexion->query("SELECT FOUND_ROWS()");
+			$total = $conexion->query($consulta_total);
 			$total = (int) $total->fetchColumn();
 
             $Npaginas =ceil($total/$registros);
             
             /*-- Encabezado de la tabla - Table header --*/
-			$tabla.='
-            <div class="table-responsive">
-            <table class="table table-hover table-bordered align-middle">
-                <thead class="table-dark">
-                    <tr class="text-center font-weight-bold">
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Usuario</th>
-                        <th>Cargo</th>
-                        <th>Actualizar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-            ';
+			$tabla.='<div class="row">';
 
             if($total>=1 && $pagina<=$Npaginas){
 				$contador=$inicio+1;
 				$pag_inicio=$inicio+1;
 				foreach($datos as $rows){
 					$tabla.='
-						<tr class="text-center" >
-							<td>'.$contador.'</td>
-							<td>'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
-							<td>'.$rows['usuario_usuario'].'</td>
-							<td>'.$rows['usuario_cargo'].'</td>
-							<td><a class="btn btn-link text-success" href="'.SERVERURL.DASHBOARD.'/admin-update/'.mainModel::encryption($rows['usuario_id']).'/"><i class="fas fa-sync-alt"></i></a></td>
-							<td>
-                                <form class="FormularioAjax" action="'.SERVERURL.'ajax/administradorAjax.php" method="POST" data-form="delete" data-lang="'.LANG.'" >
-                                    <input type="hidden" name="modulo_administrador" value="eliminar">
-									<input type="hidden" name="usuario_id_del" value="'.mainModel::encryption($rows['usuario_id']).'">
-									<button type="submit" class="btn btn-link text-danger"><i class="far fa-trash-alt"></i></button>
-								</form>
-							</td>
-						</tr>
+						<div class="col-12 col-lg-6 col-xl-4 mb-4">
+						    <div class="card card-users">
+						      	<div class="card-body">
+							        <div class="d-flex justify-content-between align-items-center">
+							          <div class="d-flex align-items-center">';
+
+							          	if(is_file("./vistas/assets/avatar/".$rows['usuario_foto'])){
+							          		$tabla.='<img src="'.SERVERURL.'vistas/assets/avatar/'.$rows['usuario_foto'].'" alt="" style="width: 45px; height: 45px" class="rounded-circle" />';
+							          	}else{
+							          		$tabla.='<img src="'.SERVERURL.'vistas/assets/avatar/Avatar_Male_3.png" alt="" style="width: 45px; height: 45px" class="rounded-circle" />';
+							          	}
+
+							            $tabla.='<div class="ms-3">
+							              <p class="fw-bold mb-1">'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].' ('.$rows['usuario_usuario'].')</p>
+							              <p class="text-muted mb-0"><i class="fas fa-user-secret"></i> &nbsp; '.$rows['usuario_cargo'].'</p>
+							            </div>
+							          </div>';
+
+							          if($rows['usuario_cuenta_estado']=="Activa"){
+							          	$tabla.='<span class="chip btn-outline-primary"><i class="fas fa-user-check"></i> &nbsp;'.$rows['usuario_cuenta_estado'].'</span>';
+							          }else{
+							          	$tabla.='<span class="chip btn-outline-danger"><i class="fas fa-user-times"></i> &nbsp;'.$rows['usuario_cuenta_estado'].'</span>';
+							          }
+
+							        $tabla.='</div>
+						      	</div>
+							    <div class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around" >
+
+							        <a class="btn btn-link m-0 text-success" href="'.SERVERURL.DASHBOARD.'/admin-update/'.mainModel::encryption($rows['usuario_id']).'/" role="button" data-ripple-color="primary" data-mdb-ripple-init
+							          ><i class="fas fa-sync-alt fa-fw"></i> &nbsp; Actualizar
+							        </a>
+							        <form class="FormularioAjax" action="'.SERVERURL.'ajax/administradorAjax.php" method="POST" data-form="delete" data-lang="'.LANG.'" >
+	                                    <input type="hidden" name="modulo_administrador" value="eliminar">
+										<input type="hidden" name="usuario_id_del" value="'.mainModel::encryption($rows['usuario_id']).'">
+										<button type="submit" class="btn btn-link text-danger"><i class="far fa-trash-alt fa-fw"></i> &nbsp; Eliminar</button>
+									</form>
+							    </div>
+						    </div>
+						 </div>
 					';
 					$contador++;
 				}
@@ -373,26 +391,18 @@
 			}else{
 				if($total>=1){
 					$tabla.='
-						<tr class="text-center" >
-							<td colspan="7">
-								<a href="'.$url.'" class="btn btn-primary btn-sm">
-									Haga clic acá para recargar el listado
-								</a>
-							</td>
-						</tr>
+						<p class="text-center">
+							<a href="'.$url.'" class="btn btn-primary btn-sm">
+								Haga clic acá para recargar el listado
+							</a>
+						</p>
 					';
 				}else{
-					$tabla.='
-						<tr class="text-center" >
-							<td colspan="7">
-								No hay registros en el sistema
-							</td>
-						</tr>
-					';
+					$tabla.='<p class="text-center lead">No hay registros en el sistema</p>';
 				}
 			}
 
-            $tabla.='</tbody></table></div>';
+            $tabla.='</div>';
 
 			if($total>0 && $pagina<=$Npaginas){
 				$tabla.='<p class="text-end">Mostrando administradores <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';

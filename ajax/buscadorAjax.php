@@ -2,7 +2,7 @@
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
 	
-	if(isset($_POST['modulo_buscador'])){
+	if(isset($_POST['modulo_buscador']) && $_SERVER['REQUEST_METHOD'] === 'POST'){
 
 		/*--------- Instancia al controlador - Instance to controller ---------*/
 		require_once "../controladores/buscadorControlador.php";
@@ -23,4 +23,5 @@
 	}else{
         session_destroy();
 		header("Location: ".SERVERURL."index/");
+		exit();
 	}

@@ -109,6 +109,10 @@ a:hover{
     background-color: #FFF;
 }
 
+.list-group-item{
+	border: none;
+}
+
 /*  Scrolls */
 .scroll::-webkit-scrollbar{
 	width: 8px;
@@ -128,6 +132,21 @@ a:hover{
 	background: rgba(29, 30, 34, 1);
 }
 
+.chip{
+	border-radius: 16px;
+	padding: 5px 15px;
+	border-width: 1.7px;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.card-users{
+	background-color: #424242;
+	color: white;
+}
+.card-users .card-footer{ background-color: #3B3B3B; }
+.card-users .text-muted{ color: #C7BEBD !important; }
+.card-users .chip{ padding: 3px 10px; font-size: 12px; }
 /*----------  Page 404 styles  ----------*/
 .container-404{
 	background: #000428;

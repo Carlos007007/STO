@@ -7,7 +7,7 @@
         /*----------  Controlador modulos de busquedas  ----------*/
         public static function modulos_busqueda_controlador($modulo){
 
-            $listaModulos=['product','admin-search','category-search','client-search','product-search'];
+            $listaModulos=['product','admin-search','category-search','cashRegister-search','client-search','product-search',"wish-list","order-search"];
 
             if(in_array($modulo, $listaModulos)){
                 return false;
@@ -47,21 +47,35 @@
                 exit();
             }
 
-            if(mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}",$texto)){
-                $alerta=[
-                    "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrió un error inesperado",
-                    "Texto"=>"El termino de busqueda no coincide con el formato solicitado",
-                    "Icon"=>"error",
-                    "TxtBtn"=>"Aceptar"
-                ];
-                echo json_encode($alerta);
-                exit();
+            if($url=="order-search"){
+                if(mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ-]{1,30}",$texto)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"El termino de busqueda no coincide con el formato solicitadox",
+                        "Icon"=>"error",
+                        "TxtBtn"=>"Aceptar"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }else{
+                if(mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}",$texto)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"El termino de busqueda no coincide con el formato solicitado",
+                        "Icon"=>"error",
+                        "TxtBtn"=>"Aceptar"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
             }
 
             $_SESSION[$url]=$texto;
 
-            if($url!="product"){
+            if($url!="product" && $url!="wish-list"){
                 $alerta=[
                     "Alerta"=>"redireccionar",
                     "URL"=>SERVERURL.DASHBOARD."/".$url."/"
@@ -96,7 +110,7 @@
 
             unset($_SESSION[$url]);
 
-            if($url!="product"){
+            if($url!="product" && $url!="wish-list"){
                 $alerta=[
                     "Alerta"=>"redireccionar",
                     "URL"=>SERVERURL.DASHBOARD."/".$url."/"

@@ -55,10 +55,24 @@
                     <div style="padding-top: 70px;">
                         <div class="container-fluid">
                             <div class="row">
+                                <?php
+                                    if(isset($_SESSION['cliente_id_sto']) && ($_SESSION['cliente_id_sto']>0)){
+
+                                        $check_favorite=$ins_login->datos_tabla("Normal","favorito WHERE cliente_id='".$_SESSION['cliente_id_sto']."' AND producto_id='".$campos['producto_id']."'","favorito_id",0);
+                                        if($check_favorite->rowCount()>=1){
+
+                                ?>
                                 <div class="col-12 col-md-6">
-                                    <button type="button" class="btn btn-link" ><i class="fas fa-heart fa-fw"></i> &nbsp; Agregar a favoritos</button>
+                                    <button type="button" class="btn btn-link" onclick="add_favorite('Delete',<?php echo $campos['producto_id'].",".$_SESSION['cliente_id_sto'].",'fav_button_".$campos['producto_id']."'"; ?>)" id="fav_button_<?php echo $campos['producto_id']; ?>" ><i class="fas fa-heart fa-fw" ></i> &nbsp; Quitar</button>
                                 </div>
-                                <?php 
+                                <?php }else{ ?>
+                                <div class="col-12 col-md-6">
+                                    <button type="button" class="btn btn-link" onclick="add_favorite('Add',<?php echo $campos['producto_id'].",".$_SESSION['cliente_id_sto'].",'fav_button_".$campos['producto_id']."'"; ?>)" id="fav_button_<?php echo $campos['producto_id']; ?>" ><i class="far fa-heart fa-fw" ></i> &nbsp; Agregar</button>
+                                </div>
+                                <?php
+                                        }
+                                        include "./vistas/inc/".LANG."/favorite_script.php";
+                                    }
                                 if(empty($_SESSION['carrito_sto'][$campos['producto_id']])){ 
                                     ?>
                                 <div class="col-12 col-md-6 text-center">
@@ -142,4 +156,3 @@
         </div>
     </div>
 </div>
-

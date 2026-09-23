@@ -24,9 +24,22 @@
     <?php 
             $total_categorias->closeCursor();
             $total_categorias=$ins_login->desconectar($total_categorias);
+
+            $total_cajas=$ins_login->datos_tabla("Normal","caja WHERE caja_id!=1","caja_id",0); 
+    ?>
+    <a href="<?php echo SERVERURL.DASHBOARD; ?>/cashRegister-list/" class="tile">
+        <div class="tile-tittle">Cajas</div>
+        <div class="tile-icon">
+            <i class="fas fa-cash-register fa-fw"></i>
+            <p><?php echo $total_cajas->rowCount(); ?> Registradas</p>
+        </div>
+    </a>
+    <?php 
+            $total_cajas->closeCursor();
+            $total_cajas=$ins_login->desconectar($total_cajas);
         }
 
-        $total_clientes=$ins_login->datos_tabla("Normal","cliente","cliente_id",0); 
+        $total_clientes=$ins_login->datos_tabla("Normal","cliente WHERE cliente_id!=1","cliente_id",0); 
     ?>
     <a href="<?php echo SERVERURL.DASHBOARD; ?>/client-list/" class="tile">
         <div class="tile-tittle">Clientes</div>
@@ -67,25 +80,17 @@
             $total_usuarios=$ins_login->desconectar($total_usuarios);
         }
 
-        $total_pedidos=$ins_login->datos_tabla("Normal","venta WHERE venta_estado_envio='Pedido'","venta_id",0);
+        $total_pedidos=$ins_login->datos_tabla("Normal","venta","venta_id",0);
     ?>
-    <a href="#" class="tile">
+    <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-list/" class="tile">
         <div class="tile-tittle">Pedidos</div>
         <div class="tile-icon">
-            <i class="fas fa-truck-loading fa-fw"></i>
+            <i class="fas fa-file-invoice-dollar fa-fw"></i>
             <p><?php echo $total_pedidos->rowCount(); ?> Registrados</p>
         </div>
     </a>
     <?php 
         $total_pedidos->closeCursor();
         $total_pedidos=$ins_login->desconectar($total_pedidos);
-    ?>
-    <a href="#" class="tile">
-        <div class="tile-tittle">Ventas</div>
-        <div class="tile-icon">
-            <i class="fas fa-file-invoice-dollar fa-fw"></i>
-            <p>&nbsp;</p>
-        </div>
-    </a>
-    
+    ?> 
 </div>

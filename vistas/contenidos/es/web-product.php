@@ -113,6 +113,9 @@
             $ins_producto = new productoControlador();
 
             echo $ins_producto->cliente_paginador_producto_controlador($pagina[2],10,$pagina[0],$_SESSION["web_product_order"],$pagina[1],$_SESSION[$pagina[0]]);
+
+
+            include "./vistas/inc/".LANG."/favorite_script.php";
         ?>
     </div>
 </div>
@@ -150,6 +153,7 @@
         let datos = new FormData();
         datos.append("orden", orden);
         datos.append("categoria", "<?php echo $pagina[1]; ?>");
+        datos.append("modulo", "product");
         datos.append("modulo_producto", "producto_ordenar");
 
         fetch('<?php echo SERVERURL; ?>ajax/productoAjax.php',{

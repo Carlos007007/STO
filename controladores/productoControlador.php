@@ -568,23 +568,38 @@
             $campos="*";
             
             if(isset($busqueda) && $busqueda!="" && $tipo=="product-search"){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE producto_codigo LIKE '%$busqueda%' OR producto_sku LIKE '%$busqueda%' OR producto_nombre LIKE '%$busqueda%' ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE producto_codigo LIKE '%$busqueda%' OR producto_sku LIKE '%$busqueda%' OR producto_nombre LIKE '%$busqueda%' ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE producto_codigo LIKE '%$busqueda%' OR producto_sku LIKE '%$busqueda%' OR producto_nombre LIKE '%$busqueda%'";
+
 			}elseif($tipo=="product-list"){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto";
+
 			}elseif($tipo=="product-category"){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE categoria_id='$busqueda' ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE categoria_id='$busqueda' ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE categoria_id='$busqueda'";
+
 			}elseif($tipo=="product-minimum"){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE producto_stock<=producto_stock_minimo ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE producto_stock<=producto_stock_minimo ORDER BY producto_nombre ASC LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE producto_stock<=producto_stock_minimo";
+
 			}
 
 			$conexion = mainModel::conectar();
 
-			$datos = $conexion->query($consulta);
+			$datos = $conexion->query($consulta_datos);
+            $datos = $datos->fetchAll();
 
-			$datos = $datos->fetchAll();
-
-			$total = $conexion->query("SELECT FOUND_ROWS()");
-			$total = (int) $total->fetchColumn();
+            $total = $conexion->query($consulta_total);
+            $total = (int) $total->fetchColumn();
 
             $Npaginas =ceil($total/$registros);
 
@@ -783,26 +798,38 @@
             $campos="*";
             
             if(isset($busqueda) && $busqueda!=""){
+
                 if($categoria!="all"){
                     $condicion_busqueda="categoria_id='$categoria' AND";
                 }else{
                     $condicion_busqueda="";
                 }
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE $condicion_busqueda producto_estado='Habilitado' AND producto_stock>0 AND producto_nombre LIKE '%$busqueda%' ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE $condicion_busqueda producto_estado='Habilitado' AND producto_stock>0 AND producto_nombre LIKE '%$busqueda%' ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE $condicion_busqueda producto_estado='Habilitado' AND producto_stock>0 AND producto_nombre LIKE '%$busqueda%'";
+
 			}elseif($categoria!="all"){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE producto_estado='Habilitado' AND categoria_id='$categoria' AND producto_stock>0 ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE producto_estado='Habilitado' AND categoria_id='$categoria' AND producto_stock>0 ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE producto_estado='Habilitado' AND categoria_id='$categoria' AND producto_stock>0";
+
 			}else{
-				$consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto WHERE producto_estado='Habilitado' AND producto_stock>0 ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT $campos FROM producto WHERE producto_estado='Habilitado' AND producto_stock>0 ORDER BY $campo_orden LIMIT $inicio,$registros";
+
+                $consulta_total="SELECT COUNT(producto_id) FROM producto WHERE producto_estado='Habilitado' AND producto_stock>0";
+
 			}
 
 			$conexion = mainModel::conectar();
 
-			$datos = $conexion->query($consulta);
+			$datos = $conexion->query($consulta_datos);
+            $datos = $datos->fetchAll();
 
-			$datos = $datos->fetchAll();
-
-			$total = $conexion->query("SELECT FOUND_ROWS()");
-			$total = (int) $total->fetchColumn();
+            $total = $conexion->query($consulta_total);
+            $total = (int) $total->fetchColumn();
 
             $Npaginas =ceil($total/$registros);
 
@@ -833,10 +860,21 @@
                                     }
                                 $tabla.='</div>
                                 <div class="text-center card-product-options" style="padding: 10px 0;">
-                                    <a href="'.SERVERURL.'details/'.mainModel::encryption($rows['producto_id']).'/" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-box-open fa-fw"></i> &nbsp; Detalles de producto</a>
-                                    &nbsp; &nbsp;
-                                    <button type="button" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-heart fa-fw"></i></button>
-                                </div>
+                                    <a href="'.SERVERURL.'details/'.mainModel::encryption($rows['producto_id']).'/" class="btn btn-link btn-sm btn-rounded" ><i class="fas fa-box-open fa-fw"></i> &nbsp; Más detalles</a>
+                                    &nbsp; &nbsp;';
+
+                                    if(isset($_SESSION['cliente_id_sto']) && ($_SESSION['cliente_id_sto']>0)){
+
+                                        $check_favorite=$conexion->query("SELECT favorito_id FROM favorito WHERE cliente_id='".$_SESSION['cliente_id_sto']."' AND producto_id='".$rows['producto_id']."'");
+
+                                        if($check_favorite->rowCount()>=1){
+                                            $tabla.='<button type="button" class="btn btn-link" onclick="add_favorite(\'Delete\','.$rows['producto_id'].','.$_SESSION['cliente_id_sto'].',\'fav_button_'.$rows['producto_id'].'\')" id="fav_button_'.$rows['producto_id'].'" ><i class="fas fa-heart fa-fw" ></i> &nbsp; Quitar</button>';
+                                        }else{
+                                            $tabla.='<button type="button" class="btn btn-link" onclick="add_favorite(\'Add\','.$rows['producto_id'].','.$_SESSION['cliente_id_sto'].',\'fav_button_'.$rows['producto_id'].'\')" id="fav_button_'.$rows['producto_id'].'" ><i class="far fa-heart fa-fw" ></i> &nbsp; Agregar</button>';
+                                        }
+                                    }
+                                    
+                                $tabla.='</div>
                             </div>
                         </div>
 					';
@@ -2028,12 +2066,18 @@
                 exit();
             }
 
-            $_SESSION["web_product_order"]=mainModel::limpiar_cadena($_POST['orden']);
+            $modulo=mainModel::limpiar_cadena($_POST['modulo']);
+
+            $_SESSION["web_".$modulo."_order"]=mainModel::limpiar_cadena($_POST['orden']);
             $categoria=mainModel::limpiar_cadena($_POST['categoria']);
+
+            if($modulo=="favorite"){
+                $modulo="wish-list";
+            }
 
             $alerta=[
                 "Alerta"=>"redireccionar",
-                "URL"=>SERVERURL."product/".$categoria."/"
+                "URL"=>SERVERURL.$modulo."/".$categoria."/"
             ];
 
             echo json_encode($alerta);

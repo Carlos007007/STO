@@ -322,18 +322,25 @@
             $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
             
             if(isset($busqueda) && $busqueda!=""){
-				$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM cliente WHERE (cliente_nombre LIKE '%$busqueda%' OR cliente_apellido LIKE '%$busqueda%' OR cliente_email LIKE '%$busqueda%' OR cliente_provincia LIKE '%$busqueda%' OR cliente_ciudad LIKE '%$busqueda%') ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT * FROM cliente WHERE (cliente_id!=1) AND (cliente_nombre LIKE '%$busqueda%' OR cliente_apellido LIKE '%$busqueda%' OR cliente_email LIKE '%$busqueda%' OR cliente_provincia LIKE '%$busqueda%' OR cliente_ciudad LIKE '%$busqueda%') ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_total="SELECT COUNT(cliente_id) FROM cliente WHERE (cliente_id!=1) AND (cliente_nombre LIKE '%$busqueda%' OR cliente_apellido LIKE '%$busqueda%' OR cliente_email LIKE '%$busqueda%' OR cliente_provincia LIKE '%$busqueda%' OR cliente_ciudad LIKE '%$busqueda%')";
+
 			}else{
-				$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM cliente ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_datos="SELECT * FROM cliente WHERE cliente_id!=1 ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
+
+				$consulta_total="SELECT COUNT(cliente_id) FROM cliente WHERE cliente_id!=1";
+
 			}
 
 			$conexion = mainModel::conectar();
 
-			$datos = $conexion->query($consulta);
-
+			$datos = $conexion->query($consulta_datos);
 			$datos = $datos->fetchAll();
 
-			$total = $conexion->query("SELECT FOUND_ROWS()");
+			$total = $conexion->query($consulta_total);
 			$total = (int) $total->fetchColumn();
 
             $Npaginas =ceil($total/$registros);
@@ -898,4 +905,5 @@
 			}
 			echo json_encode($alerta);
         } /*-- Fin controlador - End controller --*/
+
     }

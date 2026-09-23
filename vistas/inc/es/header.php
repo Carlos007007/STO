@@ -66,6 +66,9 @@
                 <a class="dropdown-item" href="<?php echo SERVERURL; ?>wish-list/">
                     <i class="fas fa-heart fa-fw"></i> &nbsp; Favoritos
                 </a>
+                <a class="dropdown-item" href="<?php echo SERVERURL; ?>account/">
+                    <i class="fas fa-user-circle fa-fw"></i> &nbsp; Mi cuenta
+                </a>
                 <a class="dropdown-item" href="javascript:void(0);" onclick="cerrar_sesion_administrador()">
                     <i class="fas fa-sign-out-alt"></i> &nbsp; Cerrar sesión
                 </a>

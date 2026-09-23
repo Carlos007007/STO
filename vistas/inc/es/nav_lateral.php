@@ -30,6 +30,21 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-cash-register fa-fw"></i> &nbsp; Cajas <i class="fas fa-chevron-down"></i></a>
+                    <ul>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/cashRegister-new/"><i class="fas fa-plus fa-fw"></i> &nbsp; Nueva caja</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/cashRegister-list/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de cajas</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/cashRegister-search/"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar caja</a>
+                        </li>
+                    </ul>
+                </li>
                 <?php } ?>
 
                 <li>
@@ -68,16 +83,22 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Pedidos & Ventas <i class="fas fa-chevron-down"></i></a>
+                    <a href="javascript:void(0);" class="nav-btn-submenu"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Pedidos <i class="fas fa-chevron-down"></i></a>
                     <ul>
                         <li>
-                            <a href="#"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Ventas realizadas</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-new/"><i class="fas fa-shopping-basket fa-fw"></i> &nbsp; Nuevo pedido</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-truck-loading fa-fw"></i> &nbsp; Pedidos pendientes</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-list/"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Pedidos realizados</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar pedido o venta</a>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-pending/"><i class="fas fa-truck-loading fa-fw"></i> &nbsp; Pedidos pendientes</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-canceled/"><i class="far fa-calendar-times fa-fw"></i> &nbsp; Pedidos cancelados</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/order-search/"><i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar pedido</a>
                         </li>
                     </ul>
                 </li>
@@ -94,6 +115,15 @@
                         </li>
                         <li>
                             <a href="<?php echo SERVERURL.DASHBOARD; ?>/admin-search/"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar administrador</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="nav-btn-submenu"><i class="far fa-file-pdf fa-fw"></i> &nbsp; Reportes <i class="fas fa-chevron-down"></i></a>
+                    <ul>
+                        <li>
+                            <a href="<?php echo SERVERURL.DASHBOARD; ?>/report-sales/"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Reporte general de ventas</a>
                         </li>
                     </ul>
                 </li>

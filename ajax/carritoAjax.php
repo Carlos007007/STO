@@ -2,7 +2,7 @@
 	require_once "../config/APP.php";
 	include "../vistas/inc/session_start.php";
 
-	if(isset($_POST['modulo_carrito'])){
+	if(isset($_POST['modulo_carrito']) && $_SERVER['REQUEST_METHOD'] === 'POST'){
 
 		/*--------- Instancia al controlador - Instance to controller ---------*/
 		require_once "../controladores/carritoControlador.php";
@@ -24,7 +24,18 @@
             echo $ins_carrito->actualizar_producto_carrito_controlador();
 		}
 
+		/*--------- Guardar pedido cliente - Save order client ---------*/
+        if($_POST['modulo_carrito']=="guardar_pedido_cliente"){
+            echo $ins_carrito->guardar_pedido_cliente_controlador();
+		}
+
+		/*--------- Agregar/quitar favoritos - Add/Remove Favorites ---------*/
+        if($_POST['modulo_carrito']=="favoritos"){
+            echo $ins_carrito->favoritos_controlador();
+		}
+
 	}else{
 		session_destroy();
 		header("Location: ".SERVERURL."index/");
+		exit();
 	}

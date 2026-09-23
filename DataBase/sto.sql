@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 10-06-2021 a las 22:19:49
--- Versión del servidor: 5.7.24
--- Versión de PHP: 7.4.15
+-- Tiempo de generación: 08-05-2025 a las 01:12:51
+-- Versión del servidor: 5.7.33
+-- Versión de PHP: 8.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,13 @@ CREATE TABLE `caja` (
   `caja_estado` varchar(17) COLLATE utf8_spanish2_ci NOT NULL,
   `caja_efectivo` decimal(30,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `caja`
+--
+
+INSERT INTO `caja` (`caja_id`, `caja_numero`, `caja_nombre`, `caja_estado`, `caja_efectivo`) VALUES
+(1, 1, 'Caja Principal', 'Habilitada', '0.00');
 
 -- --------------------------------------------------------
 
@@ -69,6 +76,13 @@ CREATE TABLE `cliente` (
   `cliente_cuenta_estado` varchar(17) COLLATE utf8_spanish2_ci NOT NULL,
   `cliente_cuenta_verificada` varchar(17) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`cliente_id`, `cliente_nombre`, `cliente_apellido`, `cliente_genero`, `cliente_telefono`, `cliente_provincia`, `cliente_ciudad`, `cliente_direccion`, `cliente_email`, `cliente_clave`, `cliente_foto`, `cliente_cuenta_estado`, `cliente_cuenta_verificada`) VALUES
+(1, 'Publico', 'General', 'N/A', '00000000', 'N/A', 'N/A', 'N/A', 'N/A@N/A', 'N/A', 'N/A', 'Deshabilitada', 'No verificada');
 
 -- --------------------------------------------------------
 
@@ -165,7 +179,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_telefono`, `usuario_genero`, `usuario_cargo`, `usuario_usuario`, `usuario_email`, `usuario_clave`, `usuario_cuenta_estado`, `usuario_foto`) VALUES
-(1, 'Administrador', 'Principal', '00000000', 'Masculino', 'Administrador', 'Administrador', 'admin@admin.com', 'K1hvdkhOR2hvQ1pzK2V1STJPaGlwQT09', 'Activa', 'Avatar_Male_2.png');
+(1, 'Administrador', 'Principal', '', 'Masculino', 'Administrador', 'Administrador', 'admin@admin.com', 'K1hvdkhOR2hvQ1pzK2V1STJPaGlwQT09', 'Activa', 'Avatar_Male_2.png');
 
 -- --------------------------------------------------------
 
@@ -183,6 +197,7 @@ CREATE TABLE `venta` (
   `venta_impuesto_porcentaje` int(3) NOT NULL,
   `venta_estado_envio` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `venta_estado_pagado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `venta_estado_estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `venta_subtotal` decimal(30,2) NOT NULL,
   `venta_impuestos` decimal(30,2) NOT NULL,
   `venta_total` decimal(30,2) NOT NULL,
@@ -287,6 +302,7 @@ ALTER TABLE `venta`
 -- Indices de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
+  ADD PRIMARY KEY (`venta_detalle_id`),
   ADD KEY `venta_id` (`venta_codigo`),
   ADD KEY `producto_id` (`producto_id`);
 
@@ -298,7 +314,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `caja_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `caja_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -310,7 +326,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
@@ -347,6 +363,12 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `venta`
   MODIFY `venta_id` int(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_detalle`
+--
+ALTER TABLE `venta_detalle`
+  MODIFY `venta_detalle_id` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

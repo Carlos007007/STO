@@ -1,0 +1,69 @@
+<div class="full-box page-header">
+    <h3 class="text-start roboto-condensed-regular text-uppercase">
+        <i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar pedido
+    </h3>
+</div>
+
+<div class="container-fluid">
+    <ul class="nav nav-tabs nav-justified mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="<?php echo SERVERURL.DASHBOARD; ?>/order-new/" ><i class="fas fa-shopping-basket fa-fw"></i> &nbsp; Nuevo pedido</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="<?php echo SERVERURL.DASHBOARD; ?>/order-list/" ><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Pedidos realizados</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="<?php echo SERVERURL.DASHBOARD; ?>/order-pending/" ><i class="fas fa-truck-loading fa-fw"></i> &nbsp; Pedidos pendientes</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="<?php echo SERVERURL.DASHBOARD; ?>/order-canceled/" ><i class="far fa-calendar-times fa-fw"></i> &nbsp; Pedidos cancelados</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" href="<?php echo SERVERURL.DASHBOARD; ?>/order-search/" ><i class="fas fa-search-dollar fa-fw"></i> &nbsp; Buscar pedido</a>
+        </li>
+    </ul>
+</div>
+
+<div class="container-fluid">
+    <?php
+        if(!isset($_SESSION[$pagina[1]]) && empty($_SESSION[$pagina[1]])){
+    ?>
+    <form class="dashboard-container mb-4 FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" data-form="default" data-lang="<?php echo LANG; ?>" method="POST" autocomplete="off" style="padding-top: 40px">
+        <input type="hidden" name="modulo_buscador" value="buscar">
+        <input type="hidden" name="modulo_url" value="<?php echo $pagina[1]; ?>">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-md-6">
+                    <div class="form-outline mb-4">
+                        <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ- ]{1,30}" class="form-control" name="txt_buscador" id="txt_buscador" maxlength="30">
+                        <label for="txt_buscador" class="form-label">Introduzca el código del pedido</label>
+                    </div>
+                    <p class="text-center">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i> &nbsp; Buscar</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <?php }else{ ?>
+    <div class="dashboard-container mb-4">
+        <form class="mb-4 FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" data-form="search" data-lang="<?php echo LANG; ?>" method="POST">
+            <input type="hidden" name="modulo_buscador" value="eliminar">
+            <input type="hidden" name="modulo_url" value="<?php echo $pagina[1]; ?>">
+            <p class="lead text-center roboto-condensed-regular">Resultados de la búsqueda <span class="font-weight-bold">“<?php echo $_SESSION[$pagina[1]]; ?>”</span></p>
+            <p class="text-center">
+                <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> &nbsp; Eliminar búsqueda</button>
+            </p>
+        </form>
+
+        <?php
+            require_once "./controladores/pedidoControlador.php";
+            $ins_pedido = new pedidoControlador();
+
+            echo $ins_pedido->paginador_pedido_controlador($pagina[2],15,$pagina[1],$_SESSION[$pagina[1]]);
+
+            include "./vistas/inc/".LANG."/print_invoice_script.php";
+        ?>
+    </div>
+    <?php } ?>
+</div>

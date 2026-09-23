@@ -60,6 +60,8 @@
 				$datos_cuenta->closeCursor();
 			    $datos_cuenta=mainModel::desconectar($datos_cuenta);
 
+			    session_regenerate_id(true);
+
 				$_SESSION['id_sto']=$row['usuario_id'];
 				$_SESSION['nombre_sto']=$row['usuario_nombre'];
 				$_SESSION['apellido_sto']=$row['usuario_apellido'];
@@ -67,6 +69,7 @@
 				$_SESSION['usuario_sto']=$row['usuario_usuario'];
 				$_SESSION['cargo_sto']=$row['usuario_cargo'];
 				$_SESSION['foto_sto']=$row['usuario_foto'];
+				$_SESSION['tipo_sto']="Administrador";
 
 				if(headers_sent()){
 					echo "<script> window.location.href='".SERVERURL.DASHBOARD."/home/'; </script>";
@@ -144,12 +147,15 @@
 				$datos_cuenta->closeCursor();
 			    $datos_cuenta=mainModel::desconectar($datos_cuenta);
 
+			    session_regenerate_id(true);
+
 				$_SESSION['cliente_id_sto']=$row['cliente_id'];
 				$_SESSION['cliente_nombre_sto']=$row['cliente_nombre'];
 				$_SESSION['cliente_apellido_sto']=$row['cliente_apellido'];
 				$_SESSION['cliente_genero_sto']=$row['cliente_genero'];
 				$_SESSION['cliente_email_sto']=$row['cliente_email'];
 				$_SESSION['cliente_foto_sto']=$row['cliente_foto'];
+				$_SESSION['tipo_sto']="Cliente";
 
 				$alerta=[
 					"Alerta"=>"redireccionar",

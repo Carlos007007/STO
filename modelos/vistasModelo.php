@@ -3,7 +3,7 @@
 
 		/*---------- Modelo obtener vistas ----------*/
 		protected static function obtener_vistas_modelo($vistas,$modulo,$idioma){
-			$lista_blanca=["index","signin","logout","product","home","registration","bag","details","orders","wish-list","admin-new","admin-list","admin-search","admin-update","client-new","client-list","client-search","client-update","category-new","category-list","category-search","category-update","company","product-new","product-list","product-search","product-minimum","product-update","product-cover","product-gallery","product-info"];
+			$lista_blanca=["index","signin","logout","product","home","registration","bag","details","account","orders","wish-list","admin-new","admin-list","admin-search","admin-update","client-new","client-list","client-search","client-update","category-new","category-list","category-search","category-update","cashRegister-new","cashRegister-list","cashRegister-search","cashRegister-update","company","product-new","product-list","product-search","product-minimum","product-update","product-cover","product-gallery","product-info","order-new","order-list","order-pending","order-canceled","order-search","orders-details","order-detail","report-sales"];
 			if(in_array($vistas, $lista_blanca)){
 				if(is_file("./vistas/contenidos/".$idioma."/".$modulo."-".$vistas.".php")){
 					$contenido="./vistas/contenidos/".$idioma."/".$modulo."-".$vistas.".php";
